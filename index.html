@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>ECJ · retro portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #d9c8b2; /* warm vintage base */
+      background-image: 
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 6px);
+      font-family: 'Source Sans 3', 'Helvetica', sans-serif;
+      color: #1e1e1e;
+      line-height: 1.5;
+      padding: 1rem;
+    }
+
+    .retro-wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
+      background-color: #fbf3e0; /* old paper */
+      border: 6px double #a55d3d; /* rusty brown */
+      border-radius: 0px;
+      padding: 2rem 2rem;
+      position: relative;
+      box-shadow: 12px 12px 0 rgba(0,0,0,0.1);
+    }
+
+    /* vintage badge */
+    .badge {
+      position: absolute;
+      top: -15px;
+      right: 30px;
+      background: #c7423f; /* miller red */
+      color: #fbf3e0;
+      padding: 0.4rem 1.8rem;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transform: rotate(3deg);
+      border: 2px solid #1e1e1e;
+      box-shadow: 5px 5px 0 #1e1e1e;
+      z-index: 1000; /* higher than navbar (100) */
+    }
+
+    .badge-sub {
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      background: #2b5e3b; /* deep green */
+      color: #fbf3e0;
+      padding: 0.2rem 1rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      transform: rotate(-2deg);
+      border: 1px solid #1e1e1e;
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .navbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      background: #fbf3e0; /* match wrapper background for sticky */
+      padding: 1rem 0 0.5rem;
+      border-bottom: 3px solid #a55d3d;
+      margin-bottom: 1.8rem;
+      gap: 0.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-main {
+      font-size: 2.8rem;
+      font-weight: 700;
+      font-family: 'Oswald', sans-serif;
+      color: #2b2b2b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: 4px solid #1e1e1e;
+      padding: 0.2rem 0.8rem;
+      background-color: #d9b382;
+      display: inline-block;
+      box-shadow: 6px 6px 0 #1e1e1e;
+      justify-self: start;
+    }
+
+    .nav-center {
+      justify-self: center;
+    }
+
+    .nav-logo {
+      height: 80px;                /* bigger */
+      width: auto;
+      display: block;
+      border: 3px solid #1e1e1e;   /* outline only, no background */
+      box-shadow: 4px 4px 0 #1e1e1e;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      /* no background, no padding – border fits image tightly */
+    }
+
+    .nav-logo:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #1e1e1e;
+    }
+
+    .hamburger {
+      position: relative;
+      display: inline-block;
+      justify-self: end;
+    }
+
+    .hamburger-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 36px;
+      height: 36px;
+      background: #d9b382;
+      border: 3px solid #1e1e1e;
+      padding: 6px 5px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .hamburger-icon span {
+      width: 100%;
+      height: 4px;
+      background: #1e1e1e;
+      border-radius: 0;
+      transition: all 0.2s;
+    }
+
+    .hamburger-icon:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #1e1e1e;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: #fbf3e0;
+      border: 4px solid #1e1e1e;
+      padding: 0.8rem 0;
+      min-width: 220px;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+      display: none;
+      z-index: 100;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      background: transparent;
+      border: none;
+      color: #1e1e1e;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dropdown-item i {
+      margin-right: 10px;
+      color: #a55d3d;
+    }
+
+    .dropdown-item:hover {
+      background: #d9b382;
+      transform: translateX(4px);
+    }
+
+    .dropdown-item.active {
+      background: #a55d3d;
+      color: #fbf3e0;
+    }
+
+    .dropdown-item.active i {
+      color: #fbf3e0;
+    }
+
+    .nav-decoration {
+      text-align: right;
+      margin-top: -1rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #a55d3d;
+      font-size: 1.2rem;
+      padding-right: 0.5rem;
+      font-weight: 600;
+    }
+
+    .content-panel {
+      background: #fbf3e0;
+      border: 3px solid #1e1e1e;
+      padding: 2rem 2rem;
+      box-shadow: inset 0 0 0 2px #fef5e0, 10px 10px 0 rgba(0,0,0,0.1);
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    .content-panel::before {
+      content: "✽ ✾ ✿";
+      position: absolute;
+      bottom: -25px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: #a55d3d;
+      opacity: 0.5;
+      letter-spacing: 6px;
+      transform: rotate(-3deg);
+    }
+
+    .content-panel::after {
+      content: "✽ ✾ ✿";
+      position: absolute;
+      top: -25px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: #a55d3d;
+      opacity: 0.5;
+      letter-spacing: 6px;
+      transform: rotate(-3deg);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .section-head {
+      font-size: 2.5rem;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      color: #1e1e1e;
+      margin-bottom: 1.5rem;
+      border-bottom: 4px double #a55d3d;
+      padding-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-head i {
+      font-size: 2rem;
+      color: #a55d3d;
+    }
+
+    .subsection-head {
+      font-size: 1.8rem;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      color: #1e1e1e;
+      margin: 1.5rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 8px solid #a55d3d;
+      padding-left: 1rem;
+      text-transform: uppercase;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 3px solid #1e1e1e;
+      background: #faf0e0;
+    }
+
+    .rpw-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fbf3e0;
+      border: 2px solid #1e1e1e;
+      font-size: 0.9rem;
+      min-width: 500px;
+    }
+
+    .rpw-table th {
+      background: #d9b382;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      color: #1e1e1e;
+      padding: 0.6rem;
+      border: 2px solid #1e1e1e;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .rpw-table td {
+      padding: 0.6rem;
+      border: 2px solid #1e1e1e;
+      vertical-align: top;
+    }
+
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .rpw-card {
+      background: #faf0e0;
+      border: 4px solid #1e1e1e;
+      padding: 1rem;
+      box-shadow: 8px 8px 0 #1e1e1e;
+      height: fit-content;
+      overflow: hidden;
+      transition: all 0.1s ease;
+    }
+
+    .rpw-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .rpw-card h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      color: #1e1e1e;
+      margin-bottom: 0.6rem;
+      border-bottom: 3px solid #a55d3d;
+      padding-bottom: 0.2rem;
+      text-transform: uppercase;
+    }
+
+    .rpw-note {
+      background: #d9b382;
+      border-left: 8px solid #a55d3d;
+      padding: 0.7rem 1rem;
+      margin: 0.8rem 0;
+      color: #1e1e1e;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+      border: 2px solid #1e1e1e;
+      box-shadow: 5px 5px 0 #1e1e1e;
+    }
+
+    .rpw-note:hover {
+      background: #c9a372;
+    }
+
+    .icare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .icare-card {
+      background: #faf0e0;
+      border: 4px solid #1e1e1e;
+      padding: 0.5rem;
+      text-align: center;
+      box-shadow: 6px 6px 0 #1e1e1e;
+      transition: transform 0.1s, box-shadow 0.1s;
+      cursor: pointer;
+    }
+
+    .icare-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .icare-card img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border: 3px solid #1e1e1e;
+      background: #cfb595;
+      pointer-events: none;
+      filter: sepia(0.3) contrast(1.1);
+    }
+
+    .entry-list {
+      margin: 1rem 0;
+    }
+
+    .entry-card {
+      background: #faf0e0;
+      border: 4px solid #1e1e1e;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 8px 8px 0 #1e1e1e;
+      transition: all 0.1s;
+    }
+
+    .entry-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .entry-date {
+      color: #a55d3d;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+    }
+
+    .entry-title {
+      font-size: 2rem;
+      font-family: 'Oswald', sans-serif;
+      color: #1e1e1e;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .entry-card p {
+      margin-bottom: 0.8rem;
+    }
+
+    .entry-card ul, .entry-card ol {
+      margin-left: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .entry-card li {
+      margin-bottom: 0.3rem;
+    }
+
+    .entry-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 1rem 0 0.3rem;
+      color: #1e1e1e;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .laptop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .laptop-card {
+      background: #faf0e0;
+      border: 4px solid #1e1e1e;
+      padding: 1rem;
+      box-shadow: 6px 6px 0 #1e1e1e;
+      transition: all 0.1s;
+    }
+
+    .laptop-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .laptop-card h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      color: #1e1e1e;
+      margin-bottom: 0.2rem;
+    }
+
+    .laptop-card .category {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #a55d3d;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      border-bottom: 2px dashed #1e1e1e;
+      padding-bottom: 0.3rem;
+    }
+
+    .laptop-card .why-wins {
+      font-size: 0.9rem;
+      color: #1e1e1e;
+    }
+
+    .bottom-line {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 4px double #a55d3d;
+    }
+
+    .bottom-line strong {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      color: #1e1e1e;
+    }
+
+    .blog-more-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, opacity 0.5s ease, margin 0.3s ease;
+    }
+
+    .blog-more-content.expanded {
+      max-height: 20000px;
+      opacity: 1;
+      margin-top: 1rem;
+    }
+
+    .read-more-btn {
+      background: #d9b382;
+      border: 4px solid #1e1e1e;
+      color: #1e1e1e;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      margin-top: 0.5rem;
+      display: inline-block;
+      box-shadow: 6px 6px 0 #1e1e1e;
+      text-transform: uppercase;
+    }
+
+    .read-more-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .responses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .image-card {
+      background: #faf0e0;
+      border: 4px solid #1e1e1e;
+      padding: 0.5rem;
+      transition: all 0.1s;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 6px 6px 0 #1e1e1e;
+    }
+
+    .image-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 70px;
+      object-fit: contain;
+      border: 3px solid #1e1e1e;
+      background: #cfb595;
+      pointer-events: none;
+      filter: sepia(0.3);
+    }
+
+    .contact-links {
+      margin-top: 2.5rem;
+      padding: 1rem 1.5rem;
+      background: #d9b382;
+      border: 4px solid #1e1e1e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      box-shadow: 8px 8px 0 #1e1e1e;
+      transition: all 0.1s;
+    }
+
+    .contact-links:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #faf0e0;
+      padding: 0.4rem 1.5rem;
+      border: 3px solid #1e1e1e;
+      font-size: 1rem;
+      transition: all 0.1s;
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    .contact-item:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #1e1e1e;
+    }
+
+    .contact-item a {
+      font-family: 'Oswald', sans-serif;
+      color: #1e1e1e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .contact-item i {
+      font-size: 1.2rem;
+      color: #a55d3d;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 85%;
+      max-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      display: block;
+      border: 8px solid #fbf3e0;
+      outline: 4px solid #1e1e1e;
+      box-shadow: 20px 20px 0 rgba(0,0,0,0.2);
+      object-fit: contain;
+    }
+
+    .close {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: #c7423f;
+      color: #fbf3e0;
+      width: 50px;
+      height: 50px;
+      border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2100;
+      border: 4px solid #1e1e1e;
+      box-shadow: 6px 6px 0 #1e1e1e;
+      transition: all 0.1s;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .close:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 4px 0 #1e1e1e;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 0.2rem; }
+      .retro-wrapper { padding: 1rem; }
+      .navbar { 
+        grid-template-columns: 1fr 1fr; 
+        grid-template-areas: "logo hamburger" "center center";
+      }
+      .logo-main { grid-area: logo; }
+      .nav-center { grid-area: center; justify-self: center; margin-top: 0.5rem; }
+      .hamburger { grid-area: hamburger; }
+      .logo-main { font-size: 2rem; }
+      .two-col-grid { grid-template-columns: 1fr; }
+      .section-head { font-size: 2rem; }
+      .subsection-head { font-size: 1.5rem; }
+      .content-panel { padding: 1.2rem; }
+      .icare-grid { grid-template-columns: repeat(2, 1fr); }
+      .badge { font-size: 1rem; padding: 0.3rem 1rem; top: -10px; right: 10px; }
+      .badge-sub { font-size: 0.7rem; bottom: -5px; left: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .icare-grid { grid-template-columns: 1fr; }
+      .contact-links { flex-direction: column; gap: 0.8rem; }
+      .responses-grid { grid-template-columns: 1fr; }
+      .laptop-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="retro-wrapper">
+    <!-- vintage badges -->
+    <div class="badge">
+      <i class="fas fa-certificate"></i> 100% NATURAL
+    </div>
+    <div class="badge-sub">
+      MADE IN USA · NO ARTIFICIAL COLORS
+    </div>
+
+    <div class="navbar">
+      <div class="logo-main">ELECANAL</div>
+      <div class="nav-center">
+        <img src="https://i.imgur.com/Ei0TZGJ.png" alt="Home" class="nav-logo" id="navLogo">
+      </div>
+      <div class="hamburger">
+        <div class="hamburger-icon" id="hamburgerIcon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <button class="dropdown-item active" id="dd-about"><i class="fas fa-user"></i> ABOUT ME</button>
+          <button class="dropdown-item" id="dd-reading"><i class="fas fa-book"></i> READING PORTFOLIO</button>
+          <button class="dropdown-item" id="dd-blog"><i class="fas fa-pen-fancy"></i> MY BLOG</button>
+          <button class="dropdown-item" id="dd-reflection"><i class="fas fa-cloud-sun"></i> REFLECTION</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Updated nav-decoration with KEEP MOVING FORWARD -->
+    <div class="nav-decoration">
+      <i class="fas fa-quote-left"></i> KEEP MOVING FORWARD <i class="fas fa-quote-right"></i>
+    </div>
+
+    <div class="content-panel">
+      <!-- ABOUT ME -->
+      <div id="pane-about" class="tab-pane active">
+        <div class="section-head">ABOUT ME</div>
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+          <div style="background: #d9b382; border: 6px solid #1e1e1e; padding: 0.5rem; transition: transform 0.1s; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 8px 8px 0 #1e1e1e;" 
+               onmouseover="this.style.transform='translate(2px,2px)'; this.style.boxShadow='4px 4px 0 #1e1e1e';" onmouseout="this.style.transform='translate(0,0)'; this.style.boxShadow='8px 8px 0 #1e1e1e';">
+            <img src="https://i.imgur.com/n7C2WVz.png" alt="Erwin Cyrus John T. Elecanal" style="width: 100%; height: 100%; object-fit: cover; border: 3px solid #1e1e1e; filter: sepia(0.2);">
+          </div>
+          <div style="flex:1; min-width: 240px;">
+            <p style="font-size: 2rem; font-family: 'Oswald'; font-weight: 600; color: #1e1e1e; line-height: 1.2;">Erwin Cyrus John T. Elecanal</p>
+            <p style="margin-top: 0.5rem; font-size: 1rem;">Hi, I'm Cyrus. I'm passionate about technology, creativity, and building digital projects. I enjoy exploring ideas and turning them into practical systems, whether it's designing applications, developing games, or creating tools that help people manage their daily lives. I'm especially interested in how design, programming, and problem-solving come together to create useful and engaging experiences. I like learning new things, improving my skills, and constantly challenging myself to create better and more innovative projects.</p>
+            <div class="rpw-note" style="margin-top: 1rem;">
+              <span style="font-weight:600;"> PURPOSE: UNDERSTAND · ASSESS · IMPROVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- READING PORTFOLIO -->
+      <div id="pane-reading" class="tab-pane">
+        <div class="section-head"><i class="fas fa-layer-group"></i> READING PORTFOLIO</div>
+
+        <div class="subsection-head">iCARE Activities</div>
+        <div class="icare-grid">
+          <div class="icare-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/IsknpSU.png" alt="iCARE placeholder 1">
+          </div>
+          <div class="icare-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/ptZyxfV.png" alt="iCARE placeholder 2">
+          </div>
+        </div>
+
+        <div class="subsection-head">Reading Process Worksheets</div>
+
+        <div style="margin-bottom: 1.2rem;">
+          <h4 style="font-family: 'Oswald'; font-size: 1.2rem; color: #1e1e1e; margin-bottom: 0.5rem;">Fantastic four</h4>
+          <div class="table-wrapper">
+            <table class="rpw-table">
+              <tr><th>Writing Style</th><th>Example from Text</th><th>Page</th></tr>
+              <tr><td>Passive Voice</td><td>Fully charged in 3 hours.</td><td>Page 3</td></tr>
+              <tr><td>Use of particular tense for a specific section of text</td><td>The polish mode is designed to give your teeth a shiny and polished finish.</td><td>Page 3</td></tr>
+            </table>
+          </div>
+          <div class="rpw-note">
+            <i class="fas fa-pen"></i> My part here is that I used passive voice and a particular tense for a specific section of the text.
+          </div>
+        </div>
+
+        <div class="two-col-grid">
+          <!-- RPW 1.1 -->
+          <div class="rpw-card">
+            <h4><i class="fas fa-clipboard-list"></i> RPW 1.1 – Section B</h4>
+            <p style="font-style: italic; margin-bottom: 0.6rem;">Details from the text & plausible inferences</p>
+            <div class="table-wrapper">
+              <table style="width:100%; border-collapse: collapse; font-size:0.85rem; min-width:400px;">
+                <tr style="background:#d9b382;"><th style="padding:0.4rem; border:2px solid #1e1e1e;">Details</th><th style="padding:0.4rem; border:2px solid #1e1e1e;">Inferences</th></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">A “massive” coral bleaching is happening in Calatagan, Batangas and other parts of the western Philippines.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">The problem is widespread and not limited to one small area, so marine ecosystems are seriously threatened.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Coral bleaching is caused by an increase in sea surface temperature.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Global warming is directly harming marine life, especially corals that are sensitive to heat.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Corals turned white at depths of 3 to 10 feet and were in worse condition than in May.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">The bleaching is ongoing and worsening, not a short-term event.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">The bleaching affected the entire 72-kilometer shoreline of the Calatagan Peninsula.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Local fishing and tourism may be negatively affected because coral reefs support livelihoods.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Similar massive bleaching occurred in 2014, 2012, and 2007.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Coral bleaching is a recurring problem, suggesting long-term environmental stress.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Marine conservationists blame global warming and pollution such as coal-fired plants and open-dump burning.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Human activities are a major contributor, and reducing pollution could help lessen future bleaching.</td></tr>
+              </table>
+            </div>
+            <div class="rpw-note" style="margin-top: 0.8rem;">
+              <i class="fas fa-pen"></i> In section B, through the article about coral bleaching, I took some texts from the article and made plausible inferences.
+            </div>
+          </div>
+          <!-- RPW 1.2 -->
+          <div class="rpw-card">
+            <h4><i class="fas fa-book-open"></i> RPW 1.2 – Section C</h4>
+            <p style="font-style: italic; margin-bottom: 0.6rem;">Unfamiliar words – context clues & definitions</p>
+            <div class="table-wrapper">
+              <table style="width:100%; border-collapse: collapse; font-size:0.85rem; min-width:400px;">
+                <tr style="background:#d9b382;"><th>Word</th><th>Context Clue</th><th>Own Definition</th></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Die-off</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">In the text it was stated that in Calatagan a massive coral die-off was observed hence by the context clues it means that the population of massive corals is decreasing gradually due to coral bleaching.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Sudden decrease or death of something.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Coral Bleaching</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">By using the word part we can determine the word “coral bleaching” coral meaning the organism living at the ocean and bleaching meaning whitening of something.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Corals turning white as a sign of the temperature getting warmer.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Open-dump</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">In the text, open-dump is a place that can be found in various communities just like how it is used in the text. With the word dump, I can assume that it has something to do with garbage.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">A place where community wastes goes.</td></tr>
+                <tr><td style="padding:0.4rem; border:2px solid #1e1e1e;">Coal-fired</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">As stated by delos reyes that there’s really not much to do to stop (coral bleaching) except that we stop the coal-fired plants meaning that those that utilizes coal-fired plants should be stopped.</td><td style="padding:0.4rem; border:2px solid #1e1e1e;">Burning plants using coal.</td></tr>
+              </table>
+            </div>
+            <div class="rpw-note" style="margin-top: 0.8rem;">
+              <i class="fas fa-users"></i> In section C. Mr. Ubas and I read through the article to find words that enticed us and gave them meaning via context clues and our own definitions.
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW: Uno heads (placed after the two-col grid, before Partner Activity) -->
+        <div style="margin-bottom: 1.2rem;">
+          <h4 style="font-family: 'Oswald'; font-size: 1.2rem; color: #1e1e1e; margin-bottom: 0.5rem;">Uno Heads</h4>
+          <div class="table-wrapper">
+            <table class="rpw-table">
+              <thead>
+                <tr>
+                  <th>Technical Term</th>
+                  <th>Context Clue (i.e., antonym, synonym, examples, description, word parts, definition or any clues in the text)</th>
+                  <th>Use each technical term in a sentence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>AI TOOLS</td>
+                  <td>By using word parts, we can easily distinguish the technical term. For example, the word AI stands for Artificial Intelligence, and a tool is something that helps accomplish a user’s goal. In conclusion, “AI TOOLS” are tools that utilize Artificial Intelligence.</td>
+                  <td>John used “AI TOOLS” to help him finish his homework.</td>
+                </tr>
+                <tr>
+                  <td>AI</td>
+                  <td>By using word parts, we can easily know the meaning of the technical term AI, which just means Artificial Intelligence or man-made intelligence. It is created to make things easier for us humans.</td>
+                  <td>I saw John using “AI” in the last test, and he got a decent score.</td>
+                </tr>
+                <tr>
+                  <td>LLMS</td>
+                  <td>“Engineering students found it helpful in a design project for a college engineering course [14] and believe that large language models (LLMs) that power applications, such as ChatGPT.” This sentence has given a clue that LLMS is something that powers AI applications, since it mentioned ChatGPT.</td>
+                  <td>John heard that “LLMS” can be utilized to build AI applications.</td>
+                </tr>
+                <tr>
+                  <td>AI Literacy</td>
+                  <td>“Effective and ethical use of AI in education requires acknowledging its limitations, fostering AI literacy.” By using this text, we can conclude that this means the ability to use, understand, and ethically navigate AI technologies.</td>
+                  <td>John learned “AI Literacy” by watching YouTube videos.</td>
+                </tr>
+                <tr>
+                  <td>Quantitative Analysis</td>
+                  <td>By using the word part we can deduce that this technical term works with number analysis since the word “Quantitative” is related to numbers, and the word analysis is all about interpreting and understanding something.</td>
+                  <td>John used “Quantitative Analysis in his thesis.”</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rpw-note">
+            <i class="fas fa-pen"></i> In the recent RPW i presented this table that shows technical terms related to AI, their context clues from the text, and example sentences.
+          </div>
+        </div>
+
+        <div class="subsection-head">Partner Activity</div>
+        <div class="responses-grid">
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/3koK9nZ.jpeg" alt="Activity p1">
+          </div>
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/MMLpMha.jpeg" alt="Activity p1.1">
+          </div>
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/j2yEJ0E.jpeg" alt="Activity p1.2">
+          </div>
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/jln7mGf.jpeg" alt="Activity p1.3">
+          </div>
+        </div>
+
+        <!-- NEW SECTION: Summative Assessment 3 -->
+        <div class="subsection-head">Summative Assessment 3</div>
+        <div class="two-col-grid">
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/bAdCPaj.png" alt="Summative Assessment 3 image 1">
+          </div>
+          <div class="image-card" onclick="openModal(this)">
+            <img src="https://i.imgur.com/I8lnk5L.png" alt="Summative Assessment 3 image 2">
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOG -->
+      <div id="pane-blog" class="tab-pane">
+        <div class="section-head"><i class="fas fa-feather"></i> MY BLOG</div>
+        <div class="entry-list">
+          <div class="entry-card">
+            <div class="entry-date"><i class="far fa-calendar-alt"></i> 5 March 2026</div>
+            <div class="entry-title">The 2026 Laptop Buyer's Guide</div>
+            <p>Most people buy laptops based on the sticker, brand name, or the salesperson's pitch. Then they end up with a slow 4GB RAM machine that dies in merely half an hour and can’t even run multiple tabs at once.</p>
+            
+            <div id="blogMoreContent" class="blog-more-content">
+              <p>“I’ve sold numerous laptops, RAM sticks, storage drives, and PCs on Facebook and other sites. I see what breaks, I see what people regret, and I know exactly where the ‘sweet spot’ is for your money.” This guide will give you insights to get the best bang for your buck, highlighting the 3 best laptops right now that hit the "Golden Trio": a good CPU, a 512GB SSD, and all-day battery life.</p>
+              
+              <h3>Finding Your "User Tier"</h3>
+              <p>Before you swipe your card, you need to identify your lane. Buying an underpowered machine is a waste of money, but overbuying for specs you'll never use is just as bad. Here is how to navigate the 2026 market:</p>
+              
+              <h3>The "Power Player" (Serious Gaming)</h3>
+              <p>If you are a gamer, you need to opt for better specs overall. You cannot rely on standard hardware to keep up with modern titles.</p>
+              <ul>
+                <li><strong>The Target:</strong> RTX 40-series and above (like the RTX 4060 or the newer 50-series).</li>
+                <li><strong>The Goal:</strong> High frame rates and thermal cooling that won't throttle your performance.</li>
+              </ul>
+              
+              <h3>The "Mid-Range" Multi-Tool (Work + Decent Gaming)</h3>
+              <p>This is for the person who needs a professional laptop for daily tasks but wants to be able to game and do work decently.</p>
+              <ul>
+                <li><strong>The Target:</strong> The "sweet spot" here is the RTX 2050. It is an affordable dedicated GPU that provides enough punch for popular games like Valorant or Genshin Impact without the massive price tag of a high-end rig.</li>
+                <li><strong>The Goal:</strong> Balanced performance that handles creative apps and gaming smoothly.</li>
+              </ul>
+              
+              <h3>The "Everyday Champion" (Work & General Stuff)</h3>
+              <p>If your day is mostly browser tabs, streaming, and Microsoft Word, you don't need a dedicated graphics card at all.</p>
+              <ul>
+                <li><strong>The Target:</strong> Stick with Integrated Graphics (like Intel Arc or AMD Radeon). This keeps the laptop thinner, cooler, and much more affordable while still being perfectly snappy for daily "works and stuff."</li>
+                <li><strong>The Goal:</strong> Maximum portability and battery life at an affordable price.</li>
+              </ul>
+              
+              <h3>The 3 Best "Golden Trio" Laptops of 2026</h3>
+              <p>If you want a machine that hits that 512GB SSD / Great CPU / All-Day Battery sweet spot, these are the current winners:</p>
+              
+              <div class="laptop-grid">
+                <div class="laptop-card">
+                  <h4>HP Victus 15</h4>
+                  <div class="category">Gamer / High Specs</div>
+                  <div class="why-wins">Often found at a great price, this hits the RTX 40-series requirement while keeping the "Golden Trio" intact.</div>
+                </div>
+                <div class="laptop-card">
+                  <h4>MSI Thin 15</h4>
+                  <div class="category">Mid-Range / Work + Play</div>
+                  <div class="why-wins">The go-to for an RTX 2050 setup. It’s light enough for work but has that dedicated GPU for decent gaming.</div>
+                </div>
+                <div class="laptop-card">
+                  <h4>Acer Aspire 16 AI</h4>
+                  <div class="category">Just Works / Work</div>
+                  <div class="why-wins">Uses the latest Integrated Graphics to provide a fast, smooth experience for daily tasks without extra bulk.</div>
+                </div>
+              </div>
+
+              <div class="bottom-line">
+                <p><strong>Bottom Line</strong><br>
+                In 2026, 8GB of RAM is the new 4GB. If you see a laptop with 8GB, walk away. Insisting on 16GB of RAM alongside that 512GB SSD is the only way to ensure your "sweet spot" investment lasts for the next five years.<br>
+                <em>Don't buy the brand; buy the specs that fit your life.</em></p>
+              </div>
+            </div>
+
+            <button id="readMoreBtn" class="read-more-btn" onclick="toggleReadMore()">READ MORE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- REFLECTION -->
+      <div id="pane-reflection" class="tab-pane">
+        <div class="section-head"><i class="fas fa-cloud-moon"></i> REFLECTION</div>
+        <div class="entry-list">
+          <div class="entry-card">
+            <p>My reflection on this course has made me realize one thing: being clear and concise with how you convey yourself plays a huge part, as it makes the conversation more direct and also encourages us to analyze what we are consuming more, rather than just receiving it at face value. To add to it, the group activities overall were quite enjoyable, especially watching all the other groups present their presentations in a quick manner. 
+</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT LINKS -->
+      <div class="contact-links">
+        <div class="contact-item"><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/cyrus.elecanallee/" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+        <div class="contact-item"><i class="fab fa-linkedin-in"></i><a href="https://www.linkedin.com/in/erwin-cyrus-john-elecanal-422aa837b/" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
+        <div class="contact-item"><i class="fab fa-discord"></i><a href="https://discord.com/users/657558608598401026" target="_blank" rel="noopener noreferrer">Discord</a></div>
+      </div>
+    </div> <!-- end content-panel -->
+  </div> <!-- end retro-wrapper -->
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="Expanded view">
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const dropdownMap = [
+        { dd: 'dd-about', pane: 'pane-about' },
+        { dd: 'dd-reading', pane: 'pane-reading' },
+        { dd: 'dd-blog', pane: 'pane-blog' },
+        { dd: 'dd-reflection', pane: 'pane-reflection' }
+      ];
+
+      function activate(ddId) {
+        const target = dropdownMap.find(d => d.dd === ddId);
+        if (!target) return;
+        const paneId = target.pane;
+
+        document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
+        document.getElementById(ddId).classList.add('active');
+
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.getElementById(paneId).classList.add('active');
+
+        document.getElementById('dropdownMenu').classList.remove('show');
+      }
+
+      const hamburger = document.getElementById('hamburgerIcon');
+      const dropdown = document.getElementById('dropdownMenu');
+
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+        }
+      });
+
+      dropdownMap.forEach(item => {
+        document.getElementById(item.dd).addEventListener('click', (e) => {
+          e.preventDefault();
+          activate(item.dd);
+        });
+      });
+
+      // Click handler for the nav logo to go to About Me
+      document.getElementById('navLogo').addEventListener('click', (e) => {
+        e.preventDefault();
+        activate('dd-about');
+      });
+
+      activate('dd-about');
+    })();
+
+    function openModal(card) {
+      const img = card.querySelector('img');
+      if (!img) return;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      modalImg.src = img.src;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    function toggleReadMore() {
+      const moreContent = document.getElementById('blogMoreContent');
+      const btn = document.getElementById('readMoreBtn');
+      if (moreContent.classList.contains('expanded')) {
+        moreContent.classList.remove('expanded');
+        btn.textContent = 'READ MORE';
+      } else {
+        moreContent.classList.add('expanded');
+        btn.textContent = 'SHOW LESS';
+      }
+    }
+  </script>
+</body>
+</html>
